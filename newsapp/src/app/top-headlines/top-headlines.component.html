@@ -1,0 +1,118 @@
+<app-header></app-header>
+<div
+  class="container-fluid"
+  style="
+    background-image: url('../../assets/Images/Webp.net-compress-image.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  "
+>
+  <br />
+  <br />
+  <br />
+  <br />
+  <button (click)="topFunction()" id="myBtn" title="Go to top">Top</button>
+  <div class="wrapper" id="flex-container">
+    <div class="flex-item" id="flex">
+      <select
+        class="browser-default custom-select"
+        [(value)]="country"
+        name="country"
+        (change)="onOptionsSelected($event)"
+      >
+        <option *ngFor="let country of allCountries" [value]="country.value">
+          {{ country.viewValue }}
+        </option>
+      </select>
+    </div>
+
+    <div class="flex-item" id="flex">
+      <select
+        class="browser-default custom-select"
+        [(value)]="category"
+        name="category"
+        (change)="onOptionsSelectedCat($event)"
+      >
+        <option *ngFor="let category of allCategories" [value]="category.value">
+          {{ category.viewValue }}
+        </option>
+      </select>
+    </div>
+
+    <div class="search_box">
+      <input
+        type="text"
+        placeholder="what are you looking for?"
+        name="searchText"
+        autocomplete="off"
+        [(ngModel)]="searchText"
+      />
+      <em class="fas fa-search"></em>
+    </div>
+    &nbsp;&nbsp;
+    <button class="btn-data" (click)="getSearchedNews()">Search</button>
+  </div>
+
+  <div class="row">
+    <div
+      class="col-md-4 col-lg-4 my-4 d-inline-block align-items-stretch"
+      *ngFor="
+        let l of topHeadlines | paginate: { itemsPerPage: 9, currentPage: p }
+      "
+    >
+      <div class="card mx-auto" style="width: 30rem">
+        <img
+          class="card-img-top img-fluid img-thumbnail"
+          src="{{ l.urlToImage }}"
+          onerror="this.src='../../assets/Images/ImgNA.jpg'"
+          alt="..."
+        />
+        <div class="card-body">
+          <h3 class="card-title">{{ l.title }}</h3>
+          <p class="card-text text-muted">{{ l.description }}</p>
+          <div class="row">
+            <a href="{{ l.url }}" class="btn btn-primary"
+              >View Full coverage
+            </a>
+            &nbsp;
+            <button
+              type="button"
+              style="margin-left: 150px"
+              class="btn btn-primary"
+              *ngIf="username"
+              (click)="addfav(l) && reload()"
+              [disabled]="l.disableFavButton"
+            >
+              <em class="fa fa-heart fa-lg"></em>
+            </button>
+            &nbsp;
+
+            <div>
+              <button
+                type="button"
+                class="btn btn-primary"
+                *ngIf="username"
+                (click)="addBookmark(l)"
+                [disabled]="l.disableBookButton"
+              >
+                <em class="fa fa-bookmark fa-lg"></em>
+                {{ count }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Update on: {{ l.publishedAt }}</small
+          ><br />
+          <small class="text-muted">Author: {{ l.author }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <pagination-controls
+    class="center"
+    (pageChange)="p = $event"
+  ></pagination-controls>
+</div>
+<app-footer></app-footer>

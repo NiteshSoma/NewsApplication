@@ -1,0 +1,72 @@
+version: '3'
+services:
+# container for mysql
+  databasemysql:
+    image: mysql:8.0.17
+    restart: always
+    ports:
+      - "3306:3306"
+    container_name: mysql-doc
+    network_mode: host
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: dbuser1
+      MYSQL_PASSWORD: pass
+      MYSQL_DATABASE: testdb
+# container for mongo
+  databasemongo:
+    image: mongo
+    restart: always
+    ports: 
+      - "27017:27017"
+    containername: mongo-con
+    network_mode: host
+    environment: 
+      MONGO_DATABASE: noteDb
+# container for user
+  NewsAppUser:
+    build: 
+      dockerfile: Dockerfile
+      context: ./NewsAppUser
+    container_name: NewsAppUser-docker
+    network_mode: host
+    restart: always
+    ports:
+     - "8081:8081"
+    depends_on:
+      - databasemysql
+# container for favorites
+  NewsAppFavorite:
+    build:
+      dockerfile: Dockerfile
+      context: ./NewsAppFavorite
+    container_name: NewsAppFavorite-docker
+    network_mode: host
+    restart: always
+    ports:
+      - "8082:8082"
+    depends_on:
+      - databasemongo
+# container for bookmarks
+  NewsAppBookmarks:
+    build:
+      dockerfile: Dockerfile
+      context: ./NewsAppBookmarks
+    container_name: NewsAppBookmarks-docker
+    network_mode: host
+    restart: always
+    ports:
+      - "8083:8083"
+    depends_on:
+      - databasemongo
+# container for frontend
+  newsapp:
+    build:
+      dockerfile: Dockerfile
+      context: ./newsapp
+    container_name: newsapp-docker
+    network_mode: host
+    restart: always
+    ports:
+      - "8084:8084"
+    

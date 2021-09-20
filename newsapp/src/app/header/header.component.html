@@ -1,0 +1,111 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+  <a class="nav-link" [routerLink]="['/top-headlines']">
+  <img src="../assets/Images/fastnews.jfif" width="80" height="50" /></a>
+  <button
+    class="navbar-toggler d-lg-none"
+    type="button"
+    (click)="isCollapsed = !isCollapsed"
+    [attr.aria-expanded]="!isCollapsed"
+    aria-controls="navbarsExampleDefault"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div
+    class="collapse navbar-collapse"
+    id="navbarsExampleDefault"
+    [ngbCollapse]="isCollapsed"
+  >
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/top-headlines']"
+          >Top Headlines <span class="sr-only">(current)</span></a
+        >
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/everything']"
+          >Bulletin <span class="sr-only">(current)</span></a
+        >
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/dashboard']"
+          >Sources <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/coronavirus']"
+          >Covid19 <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/ipl']"
+          >IPL <span class="sr-only">(current)</span></a
+        >
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/favourites']"
+          >Favourites <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/bookmark']"
+          >Bookmarks <span class="sr-only">(current)</span></a
+        >
+      </li>
+    </ul>
+
+    <div *ngIf="!flag">
+      <p
+        style="
+          padding-right: 10px;
+          font-family: 'Sansita Swashed', cursive;
+          font-size: x-large;
+          color: white;
+        "
+      >
+        {{ arrStr[0] }}
+      </p>
+    </div>
+    <div class="image">
+      <a>
+        <img
+          [src]="mypic"
+          height="50px"
+          width="50px"
+          alt=".."
+          *ngIf="mypic"
+          onerror="this.src='../../assets/Images/defaultProfilePic.png'"
+          alt="..."
+        />
+      </a>
+    </div>
+
+    <div *ngIf="!flag">
+      <button type="button" class="btn btn-secondary" (click)="signout()">
+        Logout
+      </button>
+    </div>
+
+    <div *ngIf="flag">
+      <button
+        type="button"
+        class="btn btn-secondary Loginbutton"
+        [routerLink]="['/login']"
+      >
+        Login
+      </button>
+      &nbsp;&nbsp;&nbsp;
+      <button
+        type="button"
+        class="btn btn-secondary"
+        [routerLink]="['/register']"
+      >
+        Register
+      </button>
+    </div>
+  </div>
+</nav>
